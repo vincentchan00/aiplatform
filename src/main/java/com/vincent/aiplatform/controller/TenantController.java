@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vincent.aiplatform.entity.Tenant;
+import com.vincent.aiplatform.dto.CreateTenantRequest;
 import com.vincent.aiplatform.service.TenantService;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -23,8 +25,8 @@ public class TenantController {
     }
 
     @PostMapping
-    public ResponseEntity<Tenant> createTenant(@RequestBody Tenant tenant) {
-        Tenant createdTenant = tenantService.createTenant(tenant.getName());
+    public ResponseEntity<Tenant> createTenant(@Valid @RequestBody CreateTenantRequest request) {
+        Tenant createdTenant = tenantService.createTenant(request.name().trim());
         return ResponseEntity.ok(createdTenant);
     }
 
